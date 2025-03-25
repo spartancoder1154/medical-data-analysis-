@@ -1,0 +1,64 @@
+# Step 1: Store medical data
+medical_data = """Marina Allison   ,27   ,   31.1 , 
+#7010.0   ;Markus Valdez   ,   30, 
+22.4,   #4050.0 ;Connie Ballard ,43 
+,   25.3 , #12060.0 ;Darnell Weber   
+,   35   , 20.6   , #7500.0;
+Sylvie Charles   ,22, 22.1 
+,#3022.0   ;   Vinay Padilla,24,   
+26.9 ,#4620.0 ;Meredith Santiago, 51   , 
+29.3 ,#16330.0;   Andre Mccarty, 
+19,22.7 , #2900.0 ; 
+Lorena Hodson ,65, 33.1 , #19370.0; 
+Isaac Vu ,34, 24.8,   #7045.0"""
+
+# Step 2: Replace # with $
+updated_medical_data = medical_data.replace('#', '$')
+print(updated_medical_data)
+
+# Step 3 & 4: Count the number of medical records
+num_records = updated_medical_data.count('$')
+print(f"There are {num_records} medical records in the data.")
+
+# Step 5: Split the data into records
+medical_data_split = updated_medical_data.split(';')
+print(medical_data_split)
+
+# Step 6 & 7: Split individual records and store them in a list
+medical_records = [record.split(',') for record in medical_data_split]
+print(medical_records)
+
+# Step 8 & 9: Clean whitespace
+medical_records_clean = []
+for record in medical_records:
+    record_clean = [item.strip() for item in record]
+    medical_records_clean.append(record_clean)
+print(medical_records_clean)
+
+# Step 10 & 11: Print names in uppercase
+for record in medical_records_clean:
+    print(record[0].upper())
+
+# Step 12: Store data in separate lists
+names, ages, bmis, insurance_costs = [], [], [], []
+for record in medical_records_clean:
+    names.append(record[0])
+    ages.append(int(record[1]))
+    bmis.append(float(record[2]))
+    insurance_costs.append(float(record[3].replace('$', '')))
+
+print(names, ages, bmis, insurance_costs)
+
+# Step 13: Calculate average BMI
+total_bmi = sum(bmis)
+average_bmi = total_bmi / len(bmis)
+print(f"Average BMI: {average_bmi}")
+
+# Extra: Calculate average insurance cost
+total_insurance_cost = sum(insurance_costs)
+average_insurance_cost = total_insurance_cost / len(insurance_costs)
+print(f"Average Insurance Cost: ${average_insurance_cost}")
+
+# Extra: Print formatted records
+for i in range(len(names)):
+    print(f"{names[i]} is {ages[i]} years old with a BMI of {bmis[i]} and an insurance cost of ${insurance_costs[i]}.")
